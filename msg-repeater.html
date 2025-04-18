@@ -1,0 +1,91 @@
+<script type="text/javascript">
+    RED.nodes.registerType('msg-repeater', {
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            name: { value: "" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "function.svg",
+        label: function() {
+            return this.name || "msg-repeater";
+        },
+        button: {
+            toggle: false,
+            onclick: function() {
+                var node = this;
+                $.ajax({
+                    url: "msg-repeater/" + node.id + "/trigger-capture",
+                    type: "POST",
+                    success: function(resp) {
+                        RED.notify("Capture triggered", {type: "success"});
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        RED.notify("Capture failed: " + errorThrown, {type: "error"});
+                    }
+                });
+            }
+        },
+        oneditprepare: function() {
+            var node = this;
+            
+            // Add a second button for Repeat
+            $('#node-input-repeat-button').click(function() {
+                $.ajax({
+                    url: "msg-repeater/" + node.id + "/trigger-repeat",
+                    type: "POST",
+                    success: function(resp) {
+                        RED.notify("Repeat triggered", {type: "success"});
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        RED.notify("Repeat failed: " + errorThrown, {type: "error"});
+                    }
+                });
+            });
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="msg-repeater">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <button id="node-input-repeat-button" class="editor-button"><i class="fa fa-repeat"></i> Repeat</button>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="msg-repeater">
+    <p>A node that can capture and repeat messages.</p>
+    
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">any</span></dt>
+        <dd>The standard input message payload.</dd>
+        <dt class="optional">capture <span class="property-type">boolean</span></dt>
+        <dd>Set to <code>true</code> to put the node in capture mode. The next message will be captured.</dd>
+        <dt class="optional">repeat <span class="property-type">boolean</span></dt>
+        <dd>Set to <code>true</code> to replay the last captured message.</dd>
+    </dl>
+    
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">any</span></dt>
+        <dd>The original message or the replayed message.</dd>
+    </dl>
+    
+    <h3>Details</h3>
+    <p>This node has two modes of operation:</p>
+    <ul>
+        <li>Normal mode: All messages pass through unchanged.</li>
+        <li>Capture mode: When a message with <code>msg.capture = true</code> is received, the node enters capture mode. The next message will be stored for later replay and also passed through unchanged.</li>
+    </ul>
+    <p>To replay a captured message, send a message with <code>msg.repeat = true</code>.</p>
+    <p>The node also has two buttons:</p>
+    <ul>
+        <li>The main button (on the node) triggers capture mode.</li>
+        <li>The "Repeat" button in the configuration panel triggers a replay of the captured message.</li>
+    </ul>
+</script>
