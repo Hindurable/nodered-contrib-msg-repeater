@@ -53,7 +53,137 @@ The captured message remains in memory until a new message is captured (by enter
 ## Example Flow
 
 ```json
-[{"id":"f6f2187d.f17ca8","type":"msg-repeater","z":"2795455e.938b6a","name":"","x":340,"y":220,"wires":[["c6047a.ff4e95f8"]]},{"id":"7f1e24de.69544c","type":"inject","z":"2795455e.938b6a","name":"Capture","props":[{"p":"capture","v":"true","vt":"bool"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","x":150,"y":180,"wires":[["f6f2187d.f17ca8"]]},{"id":"89a29947.478f68","type":"inject","z":"2795455e.938b6a","name":"Test Message","props":[{"p":"payload"},{"p":"topic","vt":"str"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","payload":"Hello World","payloadType":"str","x":170,"y":220,"wires":[["f6f2187d.f17ca8"]]},{"id":"3a9e3c57.c5c674","type":"inject","z":"2795455e.938b6a","name":"Repeat","props":[{"p":"repeat","v":"true","vt":"bool"}],"repeat":"","crontab":"","once":false,"onceDelay":0.1,"topic":"","x":150,"y":260,"wires":[["f6f2187d.f17ca8"]]},{"id":"c6047a.ff4e95f8","type":"debug","z":"2795455e.938b6a","name":"Output","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"payload","targetType":"msg","statusVal":"","statusType":"auto","x":510,"y":220,"wires":[]}]
+[
+    {
+        "id": "425c2ffc692b6f08",
+        "type": "msg-repeater",
+        "z": "f6f2187d.f17ca8",
+        "name": "",
+        "x": 530,
+        "y": 580,
+        "wires": [
+            [
+                "c4daf6e907b0b923"
+            ]
+        ]
+    },
+    {
+        "id": "e402feb314f26bb1",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "Capture",
+        "props": [
+            {
+                "p": "capture",
+                "v": "true",
+                "vt": "bool"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 350,
+        "y": 540,
+        "wires": [
+            [
+                "425c2ffc692b6f08"
+            ]
+        ]
+    },
+    {
+        "id": "f73f2541e25985fb",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "Test Message",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "timestamp",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "jsonPayload",
+                "v": "{\"key1\":\"value1\", \"list\": [\"first\", \"second\"]}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "Great day to be alive",
+        "payload": "Hello World",
+        "payloadType": "str",
+        "x": 330,
+        "y": 580,
+        "wires": [
+            [
+                "425c2ffc692b6f08"
+            ]
+        ]
+    },
+    {
+        "id": "f6423e902816d493",
+        "type": "inject",
+        "z": "f6f2187d.f17ca8",
+        "name": "Repeat",
+        "props": [
+            {
+                "p": "repeat",
+                "v": "true",
+                "vt": "bool"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 350,
+        "y": 620,
+        "wires": [
+            [
+                "425c2ffc692b6f08"
+            ]
+        ]
+    },
+    {
+        "id": "c4daf6e907b0b923",
+        "type": "debug",
+        "z": "f6f2187d.f17ca8",
+        "name": "Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "666071d5abaca966",
+        "type": "comment",
+        "z": "f6f2187d.f17ca8",
+        "name": "Start Capture",
+        "info": "",
+        "x": 530,
+        "y": 540,
+        "wires": []
+    }
+]
 ```
 
 ## License
