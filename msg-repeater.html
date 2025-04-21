@@ -11,48 +11,22 @@
         label: function() {
             return this.name || "msg-repeater";
         },
-        buttonClickActions: [
-            {
-                id: "capture",
-                label: "capture",
-                icon: "fa-download",
-                click: function() {
-                    var node = this;
-                    $.ajax({
-                        url: "msg-repeater/" + node.id + "/trigger-capture",
-                        type: "POST",
-                        success: function(resp) {
-                            RED.notify("Capture triggered", {type: "success"});
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            RED.notify("Capture failed: " + errorThrown, {type: "error"});
-                        }
-                    });
-                }
-            },
-            {
-                id: "repeat",
-                label: "repeat",
-                icon: "fa-repeat",
-                click: function() {
-                    var node = this;
-                    $.ajax({
-                        url: "msg-repeater/" + node.id + "/trigger-repeat",
-                        type: "POST",
-                        success: function(resp) {
-                            RED.notify("Repeat triggered", {type: "success"});
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            if (jqXHR.status === 400) {
-                                RED.notify("No message captured to repeat", {type: "warning"});
-                            } else {
-                                RED.notify("Repeat failed: " + errorThrown, {type: "error"});
-                            }
-                        }
-                    });
-                }
+        button: {
+            toggle: false,
+            onclick: function() {
+                var node = this;
+                $.ajax({
+                    url: "msg-repeater/" + node.id + "/trigger-capture",
+                    type: "POST",
+                    success: function(resp) {
+                        RED.notify("Capture triggered", {type: "success"});
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        RED.notify("Capture failed: " + errorThrown, {type: "error"});
+                    }
+                });
             }
-        ],
+        },
         oneditprepare: function() {
             var node = this;
             

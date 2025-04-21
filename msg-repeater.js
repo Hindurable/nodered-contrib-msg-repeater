@@ -14,16 +14,18 @@ module.exports = function(RED) {
         node.on('input', function(msg, send, done) {
             send = send || function() { node.send.apply(node, arguments) };
             
-            // Handle capture command
-            if (msg.hasOwnProperty('capture') && msg.capture === true) {
+            // Handle capture command - check for msg.capture explicitly
+            if (msg.capture) {
+                // Set node to capture mode
                 node.capturing = true;
                 node.status({fill:"blue", shape:"dot", text:"Capturing"});
                 if (done) done();
                 return; // Do not pass this message through
             }
             
-            // Handle repeat command
-            if (msg.hasOwnProperty('repeat') && msg.repeat === true) {
+            // Handle repeat command - check for msg.repeat explicitly
+            if (msg.repeat) {
+                // Replay the stored message
                 const storedMsg = node.context().flow.get(node.flowVarName);
                 if (storedMsg) {
                     const replayObj = RED.util.cloneMessage(storedMsg);
