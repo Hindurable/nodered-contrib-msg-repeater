@@ -15,15 +15,15 @@ module.exports = function(RED) {
             send = send || function() { node.send.apply(node, arguments) };
             
             // Handle capture command
-            if (msg.capture === true) {
+            if (msg.hasOwnProperty('capture') && msg.capture === true) {
                 node.capturing = true;
                 node.status({fill:"blue", shape:"dot", text:"Capturing"});
                 if (done) done();
-                return;
+                return; // Do not pass this message through
             }
             
             // Handle repeat command
-            if (msg.repeat === true) {
+            if (msg.hasOwnProperty('repeat') && msg.repeat === true) {
                 const storedMsg = node.context().flow.get(node.flowVarName);
                 if (storedMsg) {
                     const replayObj = RED.util.cloneMessage(storedMsg);
@@ -32,7 +32,7 @@ module.exports = function(RED) {
                     node.warn("No message captured to repeat");
                 }
                 if (done) done();
-                return;
+                return; // Do not pass this message through
             }
             
             // Normal message handling
@@ -43,7 +43,7 @@ module.exports = function(RED) {
                 node.status({fill:"green", shape:"dot", text:"Captured"});
             }
             
-            // Always pass the original message through
+            // Pass the original message through (only for normal messages)
             send(msg);
             if (done) done();
         });
@@ -72,6 +72,7 @@ module.exports = function(RED) {
             const storedMsg = node.context().flow.get("repeater_" + node.id);
             if (storedMsg) {
                 const replayObj = RED.util.cloneMessage(storedMsg);
+                // Send the message without clearing it from storage
                 node.send(replayObj);
                 res.sendStatus(200);
             } else {

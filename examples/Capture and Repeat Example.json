@@ -1,0 +1,117 @@
+[
+    {
+        "id": "f6f2187d.f17ca8",
+        "type": "msg-repeater",
+        "z": "2795455e.938b6a",
+        "name": "Message Repeater",
+        "x": 340,
+        "y": 220,
+        "wires": [
+            [
+                "c6047a.ff4e95f8"
+            ]
+        ]
+    },
+    {
+        "id": "7f1e24de.69544c",
+        "type": "inject",
+        "z": "2795455e.938b6a",
+        "name": "Capture Mode",
+        "props": [
+            {
+                "p": "capture",
+                "v": "true",
+                "vt": "bool"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 160,
+        "y": 180,
+        "wires": [
+            [
+                "f6f2187d.f17ca8"
+            ]
+        ]
+    },
+    {
+        "id": "89a29947.478f68",
+        "type": "inject",
+        "z": "2795455e.938b6a",
+        "name": "Test Message",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Hello World",
+        "payloadType": "str",
+        "x": 170,
+        "y": 220,
+        "wires": [
+            [
+                "f6f2187d.f17ca8"
+            ]
+        ]
+    },
+    {
+        "id": "3a9e3c57.c5c674",
+        "type": "inject",
+        "z": "2795455e.938b6a",
+        "name": "Repeat Message",
+        "props": [
+            {
+                "p": "repeat",
+                "v": "true",
+                "vt": "bool"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 260,
+        "wires": [
+            [
+                "f6f2187d.f17ca8"
+            ]
+        ]
+    },
+    {
+        "id": "c6047a.ff4e95f8",
+        "type": "debug",
+        "z": "2795455e.938b6a",
+        "name": "Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "a1b2c3d4.e5f6g7",
+        "type": "comment",
+        "z": "2795455e.938b6a",
+        "name": "Message Repeater Example",
+        "info": "This example demonstrates how to use the Message Repeater node.\n\n1. Click the \"Capture Mode\" button to put the node in capture mode\n2. Click the \"Test Message\" button to send a message that will be captured\n3. Click the \"Repeat Message\" button to replay the captured message\n\nAlternatively, you can use the buttons on the node itself:\n- Left button: Enter capture mode\n- Right button: Repeat the captured message",
+        "x": 170,
+        "y": 120,
+        "wires": []
+    }
+]

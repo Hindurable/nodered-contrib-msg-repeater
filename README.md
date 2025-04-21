@@ -5,10 +5,10 @@ A Node-RED node that can capture and repeat messages.
 ## Features
 
 - Capture any message flowing through the node
-- Replay the captured message on demand
+- Replay the captured message on demand without clearing it from memory
 - Visual status indicator showing capture state
 - Button on the node to trigger capture mode
-- Button in the configuration panel to trigger message replay
+- Second button on the node to trigger message replay
 
 ## Installation
 
@@ -30,15 +30,19 @@ npm install node-red-contrib-msg-repeater
 
 The node has two modes of operation:
 
-1. **Normal mode**: All messages pass through unchanged.
+1. **Normal mode**: All regular messages pass through unchanged.
 2. **Capture mode**: When a message with `msg.capture = true` is received, the node enters capture mode. The next message will be stored for later replay and also passed through unchanged.
 
-To replay a captured message, send a message with `msg.repeat = true`.
+Control messages:
+- Messages with `msg.capture = true` put the node in capture mode but do not pass through
+- Messages with `msg.repeat = true` trigger replay of the stored message but do not pass through
+
+The captured message remains in memory until a new message is captured (by entering capture mode again).
 
 ### UI Buttons
 
 - The main button on the node triggers capture mode
-- The "Repeat" button in the configuration panel triggers a replay of the captured message
+- The "Repeat" button on the node triggers a replay of the captured message
 
 ### Status Indicators
 
